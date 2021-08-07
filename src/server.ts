@@ -1,17 +1,16 @@
+require('dotenv').config();
 import express, { Request, Response } from 'express';
-import path from 'path';
-import mainRoutes from './routes/index';
+const cors = require('cors');
 
 const server = express();
 
-server.use(express.static(path.join(__dirname, '../public')));
+server.use(cors());
+server.use(express.urlencoded({extended: false}));
 
-server.use(express.urlencoded({extended: true}));
+server.get('/ping', (req: Request, res: Response) => {
+    res.json({pong: true})
+})
 
-server.use(mainRoutes);
-
-server.use((req: Request, res: Response) => {
-    res.status(404).send('Page not found');
+server.listen(process.env.PORT, () => {
+    console.log('olá mundo');
 });
-
-server.listen(3000);
