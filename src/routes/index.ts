@@ -1,10 +1,13 @@
 import { Request, Response, Router } from 'express';
+import * as homeController from '../controllers/homeController';
 
 const router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-    res.send('Hello World');
-});
+router.get('/ping', (req: Request, res: Response) => {
+    res.json({pong: true})
+})
+
+router.get('/', homeController.home);
 
 router.get('/contact', (req: Request, res: Response) => {
     res.send('Hello World Contact');
