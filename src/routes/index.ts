@@ -9,6 +9,8 @@ router.get('/ping', (req: Request, res: Response) => {
 
 router.get('/', homeController.home);
 
+router.post('/createUser', homeController.createUser);
+
 router.get('/contact', (req: Request, res: Response) => {
     res.send('Hello World Contact');
 });
