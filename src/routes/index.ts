@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import * as homeController from '../controllers/homeController';
+import * as userController from '../controllers/userController';
 
 const router = Router();
 
@@ -7,9 +7,9 @@ router.get('/ping', (req: Request, res: Response) => {
     res.json({pong: true})
 })
 
-router.get('/', homeController.home);
+router.get('/', userController.getUsers);
 
-router.post('/createUser', homeController.createUser);
+router.post('/create-user', userController.createUser);
 
 router.get('/contact', (req: Request, res: Response) => {
     res.send('Hello World Contact');
