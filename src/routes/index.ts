@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import * as userController from '../controllers/userController';
+import * as recipeController from '../controllers/recipeController';
 
 const router = Router();
 
@@ -8,19 +9,9 @@ router.get('/ping', (req: Request, res: Response) => {
 })
 
 router.get('/', userController.getUsers);
-
 router.post('/create-user', userController.createUser);
 
-router.get('/contact', (req: Request, res: Response) => {
-    res.send('Hello World Contact');
-});
-
-router.get('/about', (req: Request, res: Response) => {
-    res.send('Hello World About');
-});
-
-router.post('/about', (req: Request, res: Response) => {
-    
-})
+router.get('/recipes', recipeController.getRecipes);
+router.get('/recipe/:slug', recipeController.getOneRecipe);
 
 export default router;

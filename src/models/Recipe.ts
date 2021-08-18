@@ -19,10 +19,6 @@ export const Recipe = sequelize.define<RecipeType>("Recipe", {
     category: {
         type: DataTypes.STRING,
 
-        get() {
-            const categoryUppercase = this.getDataValue('category').toUppercase;
-            return categoryUppercase;
-        }
     },
     name: {
         type: DataTypes.STRING,
@@ -36,4 +32,7 @@ export const Recipe = sequelize.define<RecipeType>("Recipe", {
     ingQuantity: {
         type: DataTypes.INTEGER,
     },
-})
+}, {
+    tableName: 'recipes',
+    timestamps: false,
+});
