@@ -19,12 +19,32 @@ export const Recipe = sequelize.define<RecipeType>("Recipe", {
     category: {
         type: DataTypes.STRING,
 
+        get() {
+            const raw = this.getDataValue('category');
+            const rawCapitalze = raw.charAt(0).toUpperCase() + raw.slice(1);
+
+            return rawCapitalze;
+        }
     },
     name: {
         type: DataTypes.STRING,
+
+        get() {
+            const raw = this.getDataValue('name');
+            const rawCapitalze = raw.charAt(0).toUpperCase() + raw.slice(1);
+
+            return rawCapitalze;
+        }
     },
     description: {
         type: DataTypes.STRING,
+
+        get() {
+            const raw = this.getDataValue('description');
+            const rawCapitalze = raw.charAt(0).toUpperCase() + raw.slice(1);
+
+            return rawCapitalze;
+        }
     },
     cookTime: {
         type: DataTypes.INTEGER,

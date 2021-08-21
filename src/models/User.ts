@@ -16,7 +16,14 @@ export const User = sequelize.define<UserType>("User", {
         type: DataTypes.INTEGER
     },
     name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+
+        get() {
+            const raw = this.getDataValue('name');
+            const rawCapitalze = raw.charAt(0).toUpperCase() + raw.slice(1);
+            
+            return rawCapitalze;
+        }
     },
     email: {
         type: DataTypes.STRING

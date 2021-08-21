@@ -3,7 +3,7 @@ import { Recipe } from '../models/Recipe';
 
 export const getRecipes = async (req: Request, res: Response) => {
     const recipes = await Recipe.findAll();
-    res.json({recipes: recipes});
+    res.json({recipes});
 }
 
 export const getOneRecipe = async (req: Request, res: Response) => {
@@ -15,5 +15,5 @@ export const getOneRecipe = async (req: Request, res: Response) => {
         }
     });
 
-    res.json({recipe: recipe});
+    res.json({recipe});
 }
