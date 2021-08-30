@@ -21,24 +21,35 @@ export const getOneRecipe = async (req: Request, res: Response) => {
 }
 
 export const uploadRecipe = async (req: Request, res: Response) => {
-    let img = req.file?.filename;
     let category: string = req.body.category;
     let type: string = req.body.type;
     let name: string = req.body.name;
     let description: string = req.body.description;
     let cookTime: number = req.body.cookTime;
     let ingQuantity: number = req.body.ingQuantity;
+    let madeById: number = req.body.madeById;
 
     if(req.file) {
         const filename = `${req.file.filename}.png`;
 
         await sharp(req.file.path)
             .resize(200, 200)
-            .toFile(`./public/media/${filename}.png`);
+            .toFile(`./public/media/${filename}`);
 
         await unlink(req.file.path);
         
-        res.json({filename, category, type, name, description, cookTime, ingQuantity});
+        let uploadRecipe = await Recipe.create({
+            img: filename,
+            category,
+            type,
+            name,
+            description,
+            cookTime,
+            ingQuantity,
+            madeById
+        });
+
+        res.json({ result: 'Recipe upload successufuly'});
     } else {
         res.status(400);    // Bad Response
         res.json({ error: 'Arquivo inválido'});

@@ -10,6 +10,7 @@ export interface RecipeType extends Model {
     description: string,
     cookTime: number,
     ingQuantity: number,
+    madeById: number,
 }
 
 export const Recipe = sequelize.define<RecipeType>("Recipe", {
@@ -60,6 +61,9 @@ export const Recipe = sequelize.define<RecipeType>("Recipe", {
     ingQuantity: {
         type: DataTypes.INTEGER,
     },
+    madeById: {
+        type: DataTypes.INTEGER,
+    }
 }, {
     tableName: 'recipes',
     timestamps: false,
