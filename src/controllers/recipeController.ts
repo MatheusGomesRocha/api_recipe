@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import sharp from 'sharp';
 import { Recipe } from '../models/Recipe';
 
 export const getRecipes = async (req: Request, res: Response) => {
@@ -27,10 +28,16 @@ export const uploadRecipe = async (req: Request, res: Response) => {
     let cookTime: number = req.body.cookTime;
     let ingQuantity: number = req.body.ingQuantity;
 
-    if(img) {
+    if(req.file) {
+        await 
+        sharp(req.file.path)
+        .resize(200, 200)
+        .toFile(`./public/media/${req.file.filename}.png`);
+
         res.json({img, category, type, name, description, cookTime, ingQuantity});
     } else {
-        res.json({ error: 'Tipo de imagem suporte é .png'});
+        res.status(400);    // Bad Response
+        res.json({ error: 'Arquivo inválido'});
     }
 
 

@@ -1,21 +1,11 @@
 import { Request, Response, Router } from 'express';
-import multer, { diskStorage } from 'multer';
+import multer from 'multer';
 
 import * as userController from '../controllers/userController';
 import * as recipeController from '../controllers/recipeController';
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './tmp');
-    },
-    filename: (req, file, cb) => {
-        let randomName = Math.floor(Math.random() * 999999999)
-        cb(null, `${randomName+Date.now()}.png`);
-    },
-});
-
 const upload = multer({
-    storage,
+    dest: './tmp',
     fileFilter: (req, file, cb) => {
         const allowed: string = 'image/png';
         cb(null, allowed.includes(file.mimetype));      // Como o resultado volta TRUE ou FALSE, não tem problema colocar o includes direto 
