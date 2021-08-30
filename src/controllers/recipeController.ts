@@ -1,3 +1,4 @@
+import { unlink } from 'fs/promises';
 import { Request, Response } from 'express';
 import sharp from 'sharp';
 import { Recipe } from '../models/Recipe';
@@ -29,12 +30,15 @@ export const uploadRecipe = async (req: Request, res: Response) => {
     let ingQuantity: number = req.body.ingQuantity;
 
     if(req.file) {
-        await 
-        sharp(req.file.path)
-        .resize(200, 200)
-        .toFile(`./public/media/${req.file.filename}.png`);
+        const filename = `${req.file.filename}.png`;
 
-        res.json({img, category, type, name, description, cookTime, ingQuantity});
+        await sharp(req.file.path)
+            .resize(200, 200)
+            .toFile(`./public/media/${filename}.png`);
+
+        await unlink(req.file.path);
+        
+        res.json({filename, category, type, name, description, cookTime, ingQuantity});
     } else {
         res.status(400);    // Bad Response
         res.json({ error: 'Arquivo inválido'});
