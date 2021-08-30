@@ -3,7 +3,7 @@ import { User } from '../models/User';
 
 export const getUsers = async (req: Request, res: Response) => {
     let users = await User.findAll();
-    console.log(JSON.stringify(users));
+    res.json({users});
 }
 
 export const createUser = async (req: Request, res: Response) => {

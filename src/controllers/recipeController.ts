@@ -17,3 +17,14 @@ export const getOneRecipe = async (req: Request, res: Response) => {
 
     res.json({recipe});
 }
+
+export const uploadRecipe = async (req: Request, res: Response) => {
+    let category: string = req.body.category;
+    let type: string = req.body.type;
+    let name: string = req.body.name;
+    let description: string = req.body.description;
+    let cookTime: number = req.body.cookTime;
+    let ingQuantity: number = req.body.ingQuantity;
+
+    res.json({file: req.file, category, type, name, description, cookTime, ingQuantity});
+}

@@ -3,7 +3,9 @@ import { sequelize } from '../instances/mysql';
 
 export interface RecipeType extends Model {
     id: number,
+    img: string,
     category: string,
+    type: string,
     name: string,
     description: string,
     cookTime: number,
@@ -16,6 +18,9 @@ export const Recipe = sequelize.define<RecipeType>("Recipe", {
         autoIncrement: true,
         type: DataTypes.INTEGER,
     },
+    img: {
+        type: DataTypes.STRING
+    },
     category: {
         type: DataTypes.STRING,
 
@@ -25,6 +30,9 @@ export const Recipe = sequelize.define<RecipeType>("Recipe", {
 
             return rawCapitalze;
         }
+    },
+    type: {
+        type: DataTypes.STRING,
     },
     name: {
         type: DataTypes.STRING,
