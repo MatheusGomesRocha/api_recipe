@@ -7,7 +7,7 @@ import * as recipeController from '../controllers/recipeController';
 const upload = multer({
     dest: './tmp',
     fileFilter: (req, file, cb) => {
-        const allowed: string = 'image/png';
+        const allowed: string[] = ['image/png', 'image/jpg', 'image/jpeg'];
         cb(null, allowed.includes(file.mimetype));      // Como o resultado volta TRUE ou FALSE, não tem problema colocar o includes direto 
     },
 });
@@ -23,6 +23,7 @@ router.post('/create-user', userController.createUser);
 
 router.get('/recipes', recipeController.getRecipes);
 router.get('/recipe/:slug', recipeController.getOneRecipe);
-router.post('/upload-recipe', upload.single('img'), recipeController.uploadRecipe);
+router.post('/upload-recipe', recipeController.uploadRecipe);
+router.post('/upload-recipe-image/:slug', upload.single('img'), recipeController.uploadRecipeImage);
 
 export default router;
