@@ -19,6 +19,7 @@ export const getOneRecipe = async (req: Request, res: Response) => {
 }
 
 export const uploadRecipe = async (req: Request, res: Response) => {
+    let img = req.file?.filename;
     let category: string = req.body.category;
     let type: string = req.body.type;
     let name: string = req.body.name;
@@ -26,5 +27,11 @@ export const uploadRecipe = async (req: Request, res: Response) => {
     let cookTime: number = req.body.cookTime;
     let ingQuantity: number = req.body.ingQuantity;
 
-    res.json({file: req.file, category, type, name, description, cookTime, ingQuantity});
+    if(img) {
+        res.json({img, category, type, name, description, cookTime, ingQuantity});
+    } else {
+        res.json({ error: 'Tipo de imagem suporte é .png'});
+    }
+
+
 }

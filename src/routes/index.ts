@@ -18,7 +18,7 @@ const upload = multer({
     storage,
     fileFilter: (req, file, cb) => {
         const allowed: string = 'image/png';
-        cb(null, allowed.includes(file.mimetype));
+        cb(null, allowed.includes(file.mimetype));      // Como o resultado volta TRUE ou FALSE, não tem problema colocar o includes direto 
     },
 });
 
