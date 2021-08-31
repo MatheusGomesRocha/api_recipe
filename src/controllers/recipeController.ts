@@ -34,7 +34,9 @@ export const uploadRecipe = async (req: Request, res: Response) => {
 
         const filename = `${req.file.filename}.png`;
         await sharp(req.file.path)
-            .resize(200, 200)
+            .resize(350, 350, {
+                fit: 'fill'
+            })
             .toFile(`./public/media/${filename}`);
     
         await unlink(req.file.path);
@@ -52,7 +54,7 @@ export const uploadRecipe = async (req: Request, res: Response) => {
         
         res.json({ result: 'Recipe upload successufuly'});
     } else {
-        res.json({ error: 'Arquivo inválido'});
+        res.send({ error: 'This file is not compatible, please try uploading a .png file'});
     }
 }
 

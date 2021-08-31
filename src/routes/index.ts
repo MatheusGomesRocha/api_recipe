@@ -7,7 +7,7 @@ import * as recipeController from '../controllers/recipeController';
 const upload = multer({
     dest: './tmp',
     fileFilter: (req, file, cb) => {
-        const allowed: string[] = ['image/png', 'image/jpg', 'image/jpeg'];
+        const allowed: string = 'image/png';
         cb(null, allowed.includes(file.mimetype));      // Como o resultado volta TRUE ou FALSE, não tem problema colocar o includes direto 
     },
 });
