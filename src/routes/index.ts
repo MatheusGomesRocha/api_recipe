@@ -23,7 +23,7 @@ router.post('/create-user', userController.createUser);
 
 router.get('/recipes', recipeController.getRecipes);
 router.get('/recipe/:slug', recipeController.getOneRecipe);
-router.post('/upload-recipe', recipeController.uploadRecipe);
-router.post('/upload-recipe-image/:slug', upload.single('img'), recipeController.uploadRecipeImage);
+
+router.post('/upload-recipe', upload.single('img'), recipeController.uploadRecipe);
 
 export default router;
