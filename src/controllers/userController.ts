@@ -14,7 +14,7 @@ export const sendVerificationCode = (req: Request, res: Response) => {
 
     sgMail.setApiKey(API_KEY);
 
-    let randomNumber = Math.random() * (9999 - 1000);   // Pega um numero aleatório entre 1000 e 9999
+    let randomNumber = Math.floor(Math.random() * (9999 - 1000));   // Pega um numero aleatório entre 1000 e 9999
 
     const message = {
         to: email,
