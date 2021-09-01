@@ -3,6 +3,7 @@ import multer from 'multer';
 
 import * as userController from '../controllers/userController';
 import * as recipeController from '../controllers/recipeController';
+import * as Auth from '../middlewares/auth';
 
 const upload = multer({
     dest: './tmp',
@@ -21,9 +22,9 @@ router.get('/ping', (req: Request, res: Response) => {
 router.get('/', userController.getUsers);
 router.post('/create-user', userController.createUser);
 
-router.get('/recipes', recipeController.getRecipes);
+router.get('/recipes/', recipeController.getRecipes);
 router.get('/recipe/:slug', recipeController.getOneRecipe);
 
-router.post('/upload-recipe', upload.single('img'), recipeController.uploadRecipe);
+router.post('/upload-recipe/:token',  Auth.auth, upload.single('img'), recipeController.uploadRecipe);
 
 export default router;
