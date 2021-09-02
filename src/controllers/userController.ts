@@ -7,6 +7,22 @@ export const getUsers = async (req: Request, res: Response) => {
     res.json({users});
 }
 
+export const hasUser = async (req: Request, res: Response) => {
+    let email: string = req.params.email;
+
+    let hasEmailCreated = await User.findOne({
+        where: {
+            email: email,
+        }
+    })
+
+    if(hasEmailCreated) {
+        res.json({error: 'Already has an user with this email'});
+    } else {
+        res.json({success: 'Ready to go'});
+    }
+}
+
 export const sendVerificationCode = (req: Request, res: Response) => {
     let email = req.body.email;
 
@@ -30,33 +46,23 @@ export const sendVerificationCode = (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
     let name = req.body.name;
-    let email = req.body.email;
-    let password = req.body.password;
+    let email: String = req.body.email;
+    let password: String = req.body.password;
 
     let randomNumber = Math.random() * (9999 - 1000);   // Pega um numero aleatório entre 1000 e 9999
 
     let user = name + Math.floor(randomNumber);         // Junta o número aleatório pego acima com o name, mas o numero aleatório é arredondado para não ter casas decimais
 
-    let hasEmailCreated = await User.findOne({
-        where: {
-            email: email,
-        }
-    })
+    let createUser = await User.create({
+        name: name,
+        email: email,
+        user: user,
+        password: password,
+    });
 
-    if(hasEmailCreated) {
-        res.json({error: 'Already has an user with this email'});
+    if(createUser) {
+        res.json({result: true});
     } else {
-        let createUser = await User.create({
-            name: name,
-            email: email,
-            user: user,
-            password: password,
-        });
-
-        if(createUser) {
-            res.json({result: true});
-        } else {
-            res.json({result: false});
-        }
+        res.json({result: false});
     }
 }
