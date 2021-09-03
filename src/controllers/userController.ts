@@ -84,7 +84,7 @@ export const login = async (req: Request, res: Response) => {
         let bool = bcrypt.compareSync(password, hasUser.password);
 
         if(bool) {
-            res.json({result: true});
+            res.json({hasUser});
         } else {
             res.json({error: 'Incorrect Password'});
         }
