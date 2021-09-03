@@ -20,9 +20,10 @@ router.get('/ping', (req: Request, res: Response) => {
 })
 
 router.get('/', userController.getUsers);
+router.get('/has-user/:email', userController.hasUser);
 router.post('/send-verification-code', userController.sendVerificationCode);
 router.post('/create-user', userController.createUser);
-router.get('/has-user/:email', userController.hasUser);
+router.post('/login', userController.login);
 
 router.get('/recipes/', recipeController.getRecipes);
 router.get('/recipe/:slug', recipeController.getOneRecipe);

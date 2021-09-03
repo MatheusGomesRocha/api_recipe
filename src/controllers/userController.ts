@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { User } from '../models/User';
 import sgMail from '@sendgrid/mail';
+const bcrypt = require('bcrypt');
 
 export const getUsers = async (req: Request, res: Response) => {
     let users = await User.findAll();
@@ -64,5 +65,28 @@ export const createUser = async (req: Request, res: Response) => {
         res.json({result: true});
     } else {
         res.json({result: false});
+    }
+}
+
+export const login = async (req: Request, res: Response) => {
+    let email = req.body.email;
+    let password = req.body.password;
+
+    let hasUser = await User.findOne({
+        where: {
+            email: email,
+        }
+    })
+
+    if(!hasUser) {
+        res.json({error: 'Incorrect email'})
+    } else {
+        let bool = bcrypt.compareSync(password, hasUser.password);
+
+        if(bool) {
+            res.json({result: true});
+        } else {
+            res.json({error: 'Incorrect Password'});
+        }
     }
 }
