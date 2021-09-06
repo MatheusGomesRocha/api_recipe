@@ -28,6 +28,6 @@ router.post('/login', userController.login);
 router.get('/recipes/', recipeController.getRecipes);
 router.get('/recipe/:slug', recipeController.getOneRecipe);
 
-router.post('/upload-recipe/:token',  Auth.auth, upload.single('img'), recipeController.uploadRecipe);
+router.post('/upload-recipe/:token', Auth.auth, upload.single('img'), recipeController.uploadRecipe);
 
 export default router;

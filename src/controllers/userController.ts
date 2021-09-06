@@ -78,15 +78,15 @@ export const login = async (req: Request, res: Response) => {
         }
     })
 
-    if(!hasUser) {
-        res.json({error: 'Incorrect email'})
-    } else {
-        let bool = bcrypt.compareSync(password, hasUser.password);
+    if(!hasUser) {              // Verifica se existir usuário, se não existir significa que o usuário digitou um email inexistente
+        res.json({emailError: 'Incorrect email'})
+    } else {                    // Se o email enviado existir...
+        let bool = bcrypt.compareSync(password, hasUser.password);      // Compara a senha enviada com a senha encriptada no BD
 
-        if(bool) {
+        if(bool) {      // Se as duas senhas forem iguais, retorna as informações do usuário
             res.json({hasUser});
-        } else {
-            res.json({error: 'Incorrect Password'});
+        } else {        // Se for incorreta, retorna erro de senha incorreta
+            res.json({passwordError: 'Incorrect Password'});
         }
     }
 }
