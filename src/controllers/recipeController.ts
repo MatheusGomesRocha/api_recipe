@@ -4,8 +4,22 @@ import sharp from 'sharp';
 import { Recipe } from '../models/Recipe';
 
 export const getRecipes = async (req: Request, res: Response) => {
-    const recipes = await Recipe.findAll();
-    res.json({recipes});
+    let filter = req.query.filter;
+
+    if(filter === 'All') {
+        const recipes = await Recipe.findAll();
+
+        res.json({recipes});
+    } else {
+        const recipes = await Recipe.findAll({
+            where: {
+                category: filter
+            }
+        });
+
+        res.json({recipes});
+    }
+
 }
 
 export const getOneRecipe = async (req: Request, res: Response) => {
@@ -29,8 +43,10 @@ export const uploadRecipe = async (req: Request, res: Response) => {
         let name: string = req.body.name;
         let description: string = req.body.description;
         let cookTime: number = req.body.cookTime;
-        let ingQuantity: number = req.body.ingQuantity;
+        let ingQuantity: string[] = req.body.ingQuantity;
         let madeById: number = req.body.madeById;
+
+        // res.json({ingQuantity});
 
         const filename = `${req.file.filename}.png`;
         await sharp(req.file.path)
@@ -48,11 +64,15 @@ export const uploadRecipe = async (req: Request, res: Response) => {
             name: name,
             description: description,
             cookTime: cookTime,
-            ingQuantity: ingQuantity,
-            madeById: 2
+            ingQuantity: 5,
+            madeById: madeById
         });
         
-        res.json({ result: 'Recipe upload successufuly'});
+        if(uploadRecipe) {
+            res.json({ result: 'Recipe upload successufuly'});
+        } else {
+            res.json({error: 'Something wrent wrong'});
+        }
     } else {
         res.send({ error: 'This file is not compatible, please try uploading a .png file'});
     }

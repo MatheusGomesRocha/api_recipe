@@ -1,6 +1,10 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
 
+type subIng = {
+    id: number,
+    name: string,
+}
 export interface RecipeType extends Model {
     id: number,
     img: string,
@@ -59,7 +63,7 @@ export const Recipe = sequelize.define<RecipeType>("Recipe", {
         type: DataTypes.INTEGER,
     },
     ingQuantity: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.NUMBER,
     },
     madeById: {
         type: DataTypes.INTEGER,

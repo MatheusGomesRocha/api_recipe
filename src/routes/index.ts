@@ -25,7 +25,7 @@ router.post('/send-verification-code', userController.sendVerificationCode);
 router.post('/create-user', userController.createUser);
 router.post('/login', userController.login);
 
-router.get('/recipes/', recipeController.getRecipes);
+router.get('/recipes/:filter', recipeController.getRecipes);
 router.get('/recipe/:slug', recipeController.getOneRecipe);
 
 router.post('/upload-recipe/:token', Auth.auth, upload.single('img'), recipeController.uploadRecipe);
