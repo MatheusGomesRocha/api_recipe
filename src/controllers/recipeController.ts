@@ -1,10 +1,11 @@
 import { unlink } from 'fs/promises';
 import { Request, Response } from 'express';
+import { Op } from 'sequelize';
 import sharp from 'sharp';
 import { Recipe } from '../models/Recipe';
 
 export const getRecipes = async (req: Request, res: Response) => {
-    let filter = req.query.filter;
+    let filter = req.query.v;
 
     if(filter === 'All') {
         const recipes = await Recipe.findAll();
@@ -22,6 +23,24 @@ export const getRecipes = async (req: Request, res: Response) => {
 
 }
 
+export const getRecipesSearched = async (req: Request, res: Response)  => {
+    let search = req.query.v;
+
+    if(search == '') {
+        res.json({recipes: []})
+    } else {
+        const recipes = await Recipe.findAll({
+            where: {
+                name: {
+                    [Op.like]: `${search}%`
+                }
+            }
+        })
+        
+        res.json({recipes});
+    }
+}
+
 export const getOneRecipe = async (req: Request, res: Response) => {
     let slug: string = req.params.slug;
 
@@ -34,8 +53,6 @@ export const getOneRecipe = async (req: Request, res: Response) => {
     res.json({recipe});
 }
 
-
-// Esta função é executada corretamente no REST test, porém no App em React-Native, ainda não consigo pegar todos os dados
 export const uploadRecipe = async (req: Request, res: Response) => {        
     if(req.file) {
         let category: string = req.body.category;

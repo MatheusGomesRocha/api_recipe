@@ -26,6 +26,7 @@ router.post('/create-user', userController.createUser);
 router.post('/login', userController.login);
 
 router.get('/recipes/:filter', recipeController.getRecipes);
+router.get('/searching-recipes/:search', recipeController.getRecipesSearched);
 router.get('/recipe/:slug', recipeController.getOneRecipe);
 
 router.post('/upload-recipe/:token', Auth.auth, upload.single('img'), recipeController.uploadRecipe);
