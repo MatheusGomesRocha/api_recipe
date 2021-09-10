@@ -3,6 +3,7 @@ import { sequelize } from '../instances/mysql';
 const bcrypt = require('bcrypt');
 export interface UserType extends Model {
     id: number,
+    avatar: string,
     name: string,
     email: string,
     user: string,
@@ -14,6 +15,9 @@ export const User = sequelize.define<UserType>("User", {
         primaryKey: true,
         autoIncrement: true,
         type: DataTypes.INTEGER
+    },
+    avatar: {
+        type: DataTypes.STRING
     },
     name: {
         type: DataTypes.STRING,

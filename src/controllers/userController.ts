@@ -90,3 +90,20 @@ export const login = async (req: Request, res: Response) => {
         }
     }
 }
+
+export const getUserLoggedIn = async (req: Request, res: Response) => {
+    let token = req.query.token;
+
+    let userLoggedIn = await User.findOne({
+        where: {
+            id: token
+        }
+    });
+
+    if(userLoggedIn) {
+        res.json({result: 'Deu certo'});
+    } else {
+        res.json({result: 'Deu errado'});
+    }
+
+}

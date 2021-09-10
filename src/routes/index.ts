@@ -24,6 +24,7 @@ router.get('/has-user/:email', userController.hasUser);
 router.post('/send-verification-code', userController.sendVerificationCode);
 router.post('/create-user', userController.createUser);
 router.post('/login', userController.login);
+router.get('/user/:token', userController.getUserLoggedIn);
 
 router.get('/recipes/:filter', recipeController.getRecipes);
 router.get('/searching-recipes/:search', recipeController.getRecipesSearched);
