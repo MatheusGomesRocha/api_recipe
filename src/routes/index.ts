@@ -13,6 +13,14 @@ const upload = multer({
     },
 });
 
+const uploadAvatar = multer({
+    dest: './tmp',
+    fileFilter: (req, file, cb) => {
+        const allowed = ['image/jpg', 'image/jpeg', 'image/png'];
+        cb(null, allowed.includes(file.mimetype));      // Como o resultado volta TRUE ou FALSE, não tem problema colocar o includes direto 
+    },
+});
+
 const router = Router();
 
 router.get('/ping', (req: Request, res: Response) => {
@@ -25,6 +33,7 @@ router.post('/send-verification-code', userController.sendVerificationCode);
 router.post('/create-user', userController.createUser);
 router.post('/login', userController.login);
 router.get('/user/:token', userController.getUserLoggedIn);
+router.post('/edit-profile/:token', uploadAvatar.single('img'), userController.editProfile);
 
 router.get('/recipes/:filter', recipeController.getRecipes);
 router.get('/searching-recipes/:search', recipeController.getRecipesSearched);

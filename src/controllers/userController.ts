@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { User } from '../models/User';
+import { unlink } from 'fs/promises';
+import sharp from 'sharp';
 import sgMail from '@sendgrid/mail';
 const bcrypt = require('bcrypt');
 
@@ -47,8 +49,8 @@ export const sendVerificationCode = (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
     let name = req.body.name;
-    let email: String = req.body.email;
-    let password: String = req.body.password;
+    let email: string = req.body.email;
+    let password: string = req.body.password;
 
     let randomNumber = Math.random() * (9999 - 1000);   // Pega um numero aleatório entre 1000 e 9999
 
@@ -106,4 +108,55 @@ export const getUserLoggedIn = async (req: Request, res: Response) => {
         res.json({result: 'Deu errado'});
     }
 
+}
+
+export const editProfile = async (req: Request, res: Response) => {
+    let name: string = req.body.name;
+    let email: string = req.body.email;
+    let user: string = req.body.user;
+    let token: number = req.body.token;
+    
+    if(req.file) {
+        const filename = `${req.file.filename}.png`;
+        await sharp(req.file.path)
+            .resize(350, 350, {
+                fit: 'fill'
+            })
+            .toFile(`./public/media/${filename}`);
+    
+        await unlink(req.file.path);
+
+        let editProfile = await User.update({
+            avatar: filename,
+            name: name,
+            email: email,
+            user: user
+        }, {
+            where: {
+                id: token
+            }
+        });
+        
+        if(editProfile) {
+            res.json({ result: 'User edited'});
+        } else {
+            res.json({error: 'Something wrent wrong'});
+        }
+    } else {
+        let editProfile = await User.update({
+            name: name,
+            email: email,
+            user: user,
+        }, {
+            where: {
+                id: token
+            }
+        });
+        
+        if(editProfile) {
+            res.json({ result: 'User edited'});
+        } else {
+            res.json({error: 'Something wrent wrong'});
+        }
+    }
 }

@@ -20,7 +20,6 @@ export const getRecipes = async (req: Request, res: Response) => {
 
         res.json({recipes});
     }
-
 }
 
 export const getRecipesSearched = async (req: Request, res: Response)  => {
