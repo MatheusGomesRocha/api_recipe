@@ -119,8 +119,8 @@ export const editProfile = async (req: Request, res: Response) => {
     if(req.file) {
         const filename = `${req.file.filename}.png`;
         await sharp(req.file.path)
-            .resize(350, 350, {
-                fit: 'fill'
+            .resize(150, 150, {
+                fit: 'contain'
             })
             .toFile(`./public/media/${filename}`);
     
@@ -138,7 +138,7 @@ export const editProfile = async (req: Request, res: Response) => {
         });
         
         if(editProfile) {
-            res.json({ result: 'User edited'});
+            res.json({ result: 'User edited', filename: filename});
         } else {
             res.json({error: 'Something wrent wrong'});
         }
