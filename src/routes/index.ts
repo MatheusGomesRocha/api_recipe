@@ -42,5 +42,6 @@ router.get('/recipe/:slug', recipeController.getOneRecipe);
 router.post('/upload-recipe/:token', upload.single('img'), recipeController.uploadRecipe);
 
 router.get('/refrigerator', refrigeratorController.getUserRefrigerator);
+router.post('/insert-refrigerator/:token', refrigeratorController.addFoodInRefrigerator);
 
 export default router;
