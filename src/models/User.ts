@@ -1,6 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
 const bcrypt = require('bcrypt');
+
 export interface UserType extends Model {
     id: number,
     avatar: string,

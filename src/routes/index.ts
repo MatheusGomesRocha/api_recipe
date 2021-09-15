@@ -3,6 +3,7 @@ import multer from 'multer';
 
 import * as userController from '../controllers/userController';
 import * as recipeController from '../controllers/recipeController';
+import * as refrigeratorController from '../controllers/refrigeratorController';
 import * as Auth from '../middlewares/auth';
 
 const upload = multer({
@@ -38,7 +39,8 @@ router.post('/edit-profile/:token', uploadAvatar.single('img'), userController.e
 router.get('/recipes/:filter', recipeController.getRecipes);
 router.get('/searching-recipes/:search', recipeController.getRecipesSearched);
 router.get('/recipe/:slug', recipeController.getOneRecipe);
+router.post('/upload-recipe/:token', upload.single('img'), recipeController.uploadRecipe);
 
-router.post('/upload-recipe/:token', Auth.auth, upload.single('img'), recipeController.uploadRecipe);
+router.get('/refrigerator', refrigeratorController.getUserRefrigerator);
 
 export default router;
