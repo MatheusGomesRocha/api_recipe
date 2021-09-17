@@ -14,13 +14,15 @@ const upload = multer({
     },
 });
 
-const uploadAvatar = multer({
+const uploadImage = multer({
     dest: './tmp',
     fileFilter: (req, file, cb) => {
         const allowed = ['image/jpg', 'image/jpeg', 'image/png'];
         cb(null, allowed.includes(file.mimetype));      // Como o resultado volta TRUE ou FALSE, não tem problema colocar o includes direto 
     },
 });
+
+
 
 const router = Router();
 
@@ -34,7 +36,7 @@ router.post('/send-verification-code', userController.sendVerificationCode);
 router.post('/create-user', userController.createUser);
 router.post('/login', userController.login);
 router.get('/user/:token', userController.getUserLoggedIn);
-router.post('/edit-profile/:token', uploadAvatar.single('img'), userController.editProfile);
+router.post('/edit-profile/:token', uploadImage.single('img'), userController.editProfile);
 
 router.get('/recipes/:filter', recipeController.getRecipes);
 router.get('/searching-recipes/:search', recipeController.getRecipesSearched);
@@ -42,6 +44,6 @@ router.get('/recipe/:slug', recipeController.getOneRecipe);
 router.post('/upload-recipe/:token', upload.single('img'), recipeController.uploadRecipe);
 
 router.get('/refrigerator', refrigeratorController.getUserRefrigerator);
-router.post('/insert-refrigerator/:token', refrigeratorController.addFoodInRefrigerator);
+router.post('/insert-refrigerator/:token', uploadImage.single('img'), refrigeratorController.addFoodInRefrigerator);
 
 export default router;

@@ -4,6 +4,7 @@ import { sequelize } from '../instances/mysql';
 export interface RefrigeratorType extends Model {
     id: number,
     userId: number,
+    img: string,
     name: string,
     quantity: number,
     quantityType: string,
@@ -18,6 +19,9 @@ export const Refrigerator = sequelize.define<RefrigeratorType>("Refrigerator", {
     },
     userId: {
         type: DataTypes.INTEGER,
+    },
+    img: {
+        type: DataTypes.STRING
     },
     name: {
         type: DataTypes.STRING
