@@ -4,8 +4,19 @@ import sharp from 'sharp';
 import { unlink } from 'fs/promises';
 
 export const getUserRefrigerator = async (req: Request, res: Response) => {
-    let refrigerators = await Refrigerator.findAll();
-    res.json({refrigerators});
+    let token = req.params.token;
+
+    let refrigerator = await Refrigerator.findAll({
+        where: {
+            userId: token
+        }
+    });
+
+    if(refrigerator) {
+        res.json({refrigerator});
+    } else {
+        res.json({error: 'Something wrent wrong...'})
+    }
 }
 
 export const addFoodInRefrigerator = async (req: Request, res: Response) => {
@@ -14,12 +25,13 @@ export const addFoodInRefrigerator = async (req: Request, res: Response) => {
         let name: string = req.body.name;
         let quantity: number = req.body.quantity;
         let quantityType: string = req.body.quantityType;
+        let addedAt: string = req.body.addedAt;
         let expireAt: string = req.body.expireAt;
 
         const filename = `${req.file.filename}.png`;
         await sharp(req.file.path)
             .resize(100, 100, {
-                fit: 'contain'
+                fit: 'fill'
             })
             .toFile(`./public/media/${filename}`);
     
@@ -30,6 +42,7 @@ export const addFoodInRefrigerator = async (req: Request, res: Response) => {
             name: name,
             quantity: quantity,
             quantityType: quantityType,
+            addedAt: addedAt,
             expireAt: expireAt,
             img: filename
         });
@@ -40,4 +53,10 @@ export const addFoodInRefrigerator = async (req: Request, res: Response) => {
             res.json({error: 'Something wrent wrong...'});
         }
     }
+}
+
+export const deleteFoodFromRefrigerator = async (req: Request, res: Response) => {
+    let token = req.params.token;
+
+    res.json({token});
 }

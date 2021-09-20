@@ -8,6 +8,7 @@ export interface RefrigeratorType extends Model {
     name: string,
     quantity: number,
     quantityType: string,
+    addedAt: string,
     expireAt: string,
 };
     
@@ -31,6 +32,9 @@ export const Refrigerator = sequelize.define<RefrigeratorType>("Refrigerator", {
     },
     quantityType: {
         type: DataTypes.NUMBER
+    },
+    addedAt: {
+        type: DataTypes.STRING
     },
     expireAt: {
         type: DataTypes.STRING

@@ -43,7 +43,8 @@ router.get('/searching-recipes/:search', recipeController.getRecipesSearched);
 router.get('/recipe/:slug', recipeController.getOneRecipe);
 router.post('/upload-recipe/:token', upload.single('img'), recipeController.uploadRecipe);
 
-router.get('/refrigerator', refrigeratorController.getUserRefrigerator);
+router.get('/refrigerator/:token', refrigeratorController.getUserRefrigerator);
 router.post('/insert-refrigerator/:token', uploadImage.single('img'), refrigeratorController.addFoodInRefrigerator);
+router.delete('/delete-food/:token', refrigeratorController.deleteFoodFromRefrigerator);
 
 export default router;
