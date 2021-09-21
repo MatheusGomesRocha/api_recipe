@@ -94,4 +94,18 @@ export const uploadRecipe = async (req: Request, res: Response) => {
     }
 }
 
+export const getUserRecipes = async (req: Request, res: Response) => {
+    let token = req.params.token;
 
+    let userRecipes = await Recipe.findAll({
+        where: {
+            madeById: token
+        }
+    });
+
+    if(userRecipes) {
+        res.json({result: userRecipes});
+    } else {
+        res.json({error: 'Something wrent wrong'});
+    }
+}
