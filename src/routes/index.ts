@@ -45,6 +45,6 @@ router.post('/upload-recipe/:token', upload.single('img'), recipeController.uplo
 
 router.get('/refrigerator/:token', refrigeratorController.getUserRefrigerator);
 router.post('/insert-refrigerator/:token', uploadImage.single('img'), refrigeratorController.addFoodInRefrigerator);
-router.delete('/delete-food/:token', refrigeratorController.deleteFoodFromRefrigerator);
+router.post('/delete-food/:token', refrigeratorController.deleteFoodFromRefrigerator);
 
 export default router;

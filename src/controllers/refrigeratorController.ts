@@ -56,7 +56,17 @@ export const addFoodInRefrigerator = async (req: Request, res: Response) => {
 }
 
 export const deleteFoodFromRefrigerator = async (req: Request, res: Response) => {
-    let token = req.params.token;
+    let id = req.body.id;
 
-    res.json({token});
+    let deleteFood = await Refrigerator.destroy({
+        where: {
+            id: id
+        }
+    });
+
+    if(deleteFood) {
+        res.json({result: 'Food Deleted'});
+    } else {
+        res.json({error: 'Something wrent wrong'});
+    }
 }
