@@ -5,15 +5,39 @@ import sharp from 'sharp';
 import { Recipe } from '../models/Recipe';
 
 export const getRecipes = async (req: Request, res: Response) => {
-    let filter = req.query.v;
+    let filter: string = req.params.filter;
+    let type: string = req.params.type;
 
-    if(filter === 'All') {
+    if(filter === 'All' && type !== 'refrigerator') {
+        const recipes = await Recipe.findAll({
+            where: {
+                type: type
+            }
+        });
+
+        res.json({recipes});
+    }
+
+    if(type === 'refrigerator' && filter !== 'All') {
+        const recipes = await Recipe.findAll({
+            where: {
+                category: filter.toUpperCase()
+            }
+        });
+
+        res.json({recipes});
+    }
+
+    if(type === 'refrigerator' && filter === 'All') {
         const recipes = await Recipe.findAll();
 
         res.json({recipes});
-    } else {
+    }
+
+    if(type !== 'refrigerator' && filter !== 'All') {
         const recipes = await Recipe.findAll({
             where: {
+                type: type,
                 category: filter
             }
         });

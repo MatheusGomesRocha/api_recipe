@@ -38,7 +38,7 @@ router.post('/login', userController.login);
 router.get('/user/:token', userController.getUserLoggedIn);
 router.post('/edit-profile/:token', uploadImage.single('img'), userController.editProfile);
 
-router.get('/recipes/:filter', recipeController.getRecipes);
+router.get('/recipes/:filter/:type', recipeController.getRecipes);
 router.get('/searching-recipes/:search', recipeController.getRecipesSearched);
 router.get('/recipe/:slug', recipeController.getOneRecipe);
 router.post('/upload-recipe/:token', upload.single('img'), recipeController.uploadRecipe);
