@@ -133,3 +133,31 @@ export const getUserRecipes = async (req: Request, res: Response) => {
         res.json({error: 'Something wrent wrong'});
     }
 }
+
+export const deleteRecipe = async (req: Request, res: Response) => {
+    let token: number = req.body.token;
+    let recipeId: number = req.body.id;
+    
+    let getRecipes = await Recipe.findOne({
+        where: {
+            madeById: token,
+            id: recipeId,
+        }
+    })
+
+    if(getRecipes) {
+        let deleteData = await Recipe.destroy({
+            where: {
+                id: recipeId,
+            }
+        });
+
+        if(deleteData) {
+            res.json({result: 'Recipe delete successfully'});
+        } else {
+            res.json({error: 'Something wrent wrong'});
+        }
+    }
+}
+
+    
