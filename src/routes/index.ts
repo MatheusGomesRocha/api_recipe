@@ -4,6 +4,7 @@ import multer from 'multer';
 import * as userController from '../controllers/userController';
 import * as recipeController from '../controllers/recipeController';
 import * as refrigeratorController from '../controllers/refrigeratorController';
+import * as favoriteController from '../controllers/favoriteController';
 import * as Auth from '../middlewares/auth';
 
 const upload = multer({
@@ -48,5 +49,8 @@ router.post('/delete-recipe/:token', recipeController.deleteRecipe);
 router.get('/refrigerator/:token', refrigeratorController.getUserRefrigerator);
 router.post('/insert-refrigerator/:token', uploadImage.single('img'), refrigeratorController.addFoodInRefrigerator);
 router.post('/delete-food/:token', refrigeratorController.deleteFoodFromRefrigerator);
+
+router.post('/add-favorites/:token', favoriteController.addToFavorites);
+router.get('/favorites/:token', favoriteController.getUserFavorites);
 
 export default router;

@@ -1,5 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../instances/mysql';
+import { Recipe } from './Recipe';
 
 export interface FavoriteType extends Model {
     id: number,
@@ -23,3 +24,5 @@ export const Favorite = sequelize.define<FavoriteType>("Favorite", {
     tableName: 'favorites',
     timestamps: false,
 });
+
+Favorite.belongsTo(Recipe);
