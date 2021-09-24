@@ -53,5 +53,6 @@ router.post('/delete-food/:token', refrigeratorController.deleteFoodFromRefriger
 router.get('/recipe-favorite/:token/:recipeId', favoriteController.isRecipeFavorited);
 router.post('/add-favorites/:token', favoriteController.addToFavorites);
 router.get('/favorites/:token', favoriteController.getUserFavorites);
+router.post('/delete-favorite/:token', favoriteController.deleteFromFavorites);
 
 export default router;

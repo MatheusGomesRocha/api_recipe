@@ -22,8 +22,8 @@ export const isRecipeFavorited = async (req: Request, res: Response) => {
 
 
 export const addToFavorites = async (req: Request, res: Response) => {
-    let token = req.body.token;
-    let recipeId = req.body.recipeId;
+    let token: number = req.body.token;
+    let recipeId: number = req.body.recipeId;
 
     let hasFavorited = await Favorite.findOne({
         where: {
@@ -56,4 +56,22 @@ export const getUserFavorites = async (req: Request, res: Response) => {
     });
 
     res.json({result: favorites});
+};
+
+export const deleteFromFavorites = async (req: Request, res: Response) => {
+    let token: number = req.body.token;
+    let recipeId: number = req.body.recipeId;
+
+    let deleteFavorite = await Favorite.destroy({
+        where: {
+            userId: token,
+            recipeId: recipeId,
+        }
+    });
+
+    if(deleteFavorite) {
+        res.json({result: 'Remove from favorite'});
+    } else {
+        res.json({error: 'Something wrent wrong'});
+    }
 }
