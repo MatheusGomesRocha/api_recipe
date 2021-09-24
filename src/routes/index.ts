@@ -50,6 +50,7 @@ router.get('/refrigerator/:token', refrigeratorController.getUserRefrigerator);
 router.post('/insert-refrigerator/:token', uploadImage.single('img'), refrigeratorController.addFoodInRefrigerator);
 router.post('/delete-food/:token', refrigeratorController.deleteFoodFromRefrigerator);
 
+router.get('/recipe-favorite/:token/:recipeId', favoriteController.isRecipeFavorited);
 router.post('/add-favorites/:token', favoriteController.addToFavorites);
 router.get('/favorites/:token', favoriteController.getUserFavorites);
 
