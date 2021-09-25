@@ -25,4 +25,5 @@ export const Favorite = sequelize.define<FavoriteType>("Favorite", {
     timestamps: false,
 });
 
+Recipe.hasMany(Favorite);
 Favorite.belongsTo(Recipe);

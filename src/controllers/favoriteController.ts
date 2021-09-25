@@ -52,10 +52,10 @@ export const getUserFavorites = async (req: Request, res: Response) => {
     let token = req.params.token;
 
     let favorites = await Favorite.findAll({
-        include: Recipe
+        include: Recipe,
     });
 
-    res.json({result: favorites});
+    res.send(favorites);
 };
 
 export const deleteFromFavorites = async (req: Request, res: Response) => {
