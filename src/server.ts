@@ -1,5 +1,4 @@
 const cors = require('cors');
-import path from 'path';
 import express from 'express';
 import mainRoutes from './routes';
 import dotenv from 'dotenv';
@@ -11,8 +10,6 @@ const server = express();       /** Inicia um servidor */
 server.use(express.json());
 
 server.use(cors());         /** Habilita com que o projeto possa ser usado como api */
-
-server.use(express.static(path.join(__dirname, '../public')));
 
 server.use(express.urlencoded({extended: false}));  /** Habilita basicamente com que possa ser usado o método POST */
 
