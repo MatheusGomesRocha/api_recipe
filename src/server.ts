@@ -13,7 +13,7 @@ server.use(cors());         /** Habilita com que o projeto possa ser usado como 
 
 server.use(express.urlencoded({extended: false}));  /** Habilita basicamente com que possa ser usado o método POST */
 
-server.use(mainRoutes);     /** Usa as rotas criadas em um arquivo diferente */
+server.use('/api', mainRoutes);     /** Usa as rotas criadas em um arquivo diferente */
 
 server.listen(process.env.PORT, () => {     /** Indica a porta que será usada para rodar o projeto */ 
     console.log('olá mundo');

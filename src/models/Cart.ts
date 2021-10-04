@@ -6,7 +6,7 @@ export interface Cart extends Model {
     productName: string,
     productQuantity: number,
     productPrice: number,
-    userId: number,
+    userKey: string,
 }
     
 export const Cart = sequelize.define<Cart>("Cart", {
@@ -24,8 +24,8 @@ export const Cart = sequelize.define<Cart>("Cart", {
     productPrice: {
         type: DataTypes.INTEGER
     },
-    userId: {
-        type: DataTypes.INTEGER
+    userKey: {
+        type: DataTypes.STRING
     },
 }, {
     tableName: 'cart',

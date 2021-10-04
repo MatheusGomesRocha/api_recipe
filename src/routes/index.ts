@@ -12,7 +12,11 @@ router.get('/ping', (req: Request, res: Response) => {
 router.post('/create-user', userController.createUser);
 router.post('/login', userController.login);
 
-router.get('/cart/:userId', cartController.getCart);
+router.get('/cart/:userKey', cartController.getCart);
+router.get('/cart-quantity', cartController.getCartQuantity);
+router.get('/cart-price', cartController.getCartPrice);
 router.post('/add-to-cart', cartController.addToCart);
+router.post('/decrement-product', cartController.decrementQuantity);
+router.post('/increment-product', cartController.incrementQuantity);
 
 export default router;
