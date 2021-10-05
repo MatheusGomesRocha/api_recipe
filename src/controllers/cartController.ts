@@ -60,7 +60,6 @@ export const addToCart = async (req: Request, res: Response) => {
 
 export const incrementQuantity = async (req: Request, res: Response) => {
     let productName: string = req.body.productName;
-    let productPrice: number = req.body.productPrice;
     let userEmail: string = req.body.userEmail;
 
     let incrementFromCart = await Cart.increment(
@@ -76,7 +75,6 @@ export const incrementQuantity = async (req: Request, res: Response) => {
 
 export const decrementQuantity = async (req: Request, res: Response) => {
     let productName: string = req.body.productName;
-    let productPrice: number = req.body.productPrice;
     let userEmail: string = req.body.userEmail;
 
     let decrementFromCart = await Cart.update({ 
@@ -89,12 +87,11 @@ export const decrementQuantity = async (req: Request, res: Response) => {
 }
 
 export const getCartQuantity = async (req: Request, res: Response) => {
-    let productName: string = req.body.productName;
-    let userEmail: string = req.body.userEmail;
+    let userEmail: string = req.params.email;
 
     let cartQuantity = await Cart.sum('productQuantity', {
         where: {
-            userKey: 'teste@hotmail.com',
+            userKey: userEmail,
         }
     }).then(sum => {
         res.json({result: sum});
@@ -103,16 +100,21 @@ export const getCartQuantity = async (req: Request, res: Response) => {
 }
 
 export const getCartPrice = async (req: Request, res: Response) => {
-    let productName: string = req.params.productName;
-    let userEmail: string = req.params.userEmail;
+    let userEmail = req.params.email;
 
-    let getCartPrice = await Cart.findAll({ 
-        attributes: [
-            [Sequelize.literal('productPrice * productQantity'), 'test_field']
-        ],
+    let getCartPrice = await Cart.findAll({
+        where: {
+            userKey: userEmail,
+        }
     });
 
-    res.json({getCartPrice});
+    let subtotal = 0;
+
+    getCartPrice.forEach(res => {
+        subtotal += res.productPrice * res.productQuantity;
+    });
+
+    res.json({subtotal});
 
 }
 
