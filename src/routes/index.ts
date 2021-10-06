@@ -18,5 +18,6 @@ router.get('/cart-price/:email', cartController.getCartPrice);
 router.post('/add-to-cart', cartController.addToCart);
 router.post('/decrement-product', cartController.decrementQuantity);
 router.post('/increment-product', cartController.incrementQuantity);
+router.post('/delete-product', cartController.deleteFromCart);
 
 export default router;

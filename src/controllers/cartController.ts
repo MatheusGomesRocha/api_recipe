@@ -118,3 +118,18 @@ export const getCartPrice = async (req: Request, res: Response) => {
 
 }
 
+export const deleteFromCart = async (req: Request, res: Response) => {
+    let id: number = req.body.id;
+
+    let deleteItem = await Cart.destroy({
+        where: {
+            id: id,
+        }
+    })
+
+    if(deleteItem) {
+        res.send('Deleted');
+    } else {
+        res.send('Error');
+    }
+}
